@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <!--Add domain if not secure protocol-->
+        <domain includeSubdomains="true">ws://d720-95-27-42-57.eu.ngrok.io</domain>
+    </domain-config>
+</network-security-config>
