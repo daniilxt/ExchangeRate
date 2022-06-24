@@ -1,7 +1,7 @@
 package ru.daniilxt.feature.template
 
 fun main() {
-//    GenerateFeatureModule("user_profile", "UserProfile").main()
+    GenerateFeatureModule("favorite", "Favorite").main()
 //    GenerateRecyclerAdapter(
 //        moduleName = "main_screen_map",
 //        adapterName = "EduUserCard",

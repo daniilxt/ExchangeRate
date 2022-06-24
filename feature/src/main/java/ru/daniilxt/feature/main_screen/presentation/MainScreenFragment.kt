@@ -7,11 +7,15 @@ import android.view.ViewGroup
 import com.google.android.material.tabs.TabLayoutMediator
 import ru.daniilxt.common.base.BaseFragment
 import ru.daniilxt.common.di.FeatureUtils
+import ru.daniilxt.common.extensions.setLightStatusBar
+import ru.daniilxt.common.extensions.setStatusBarColor
 import ru.daniilxt.feature.R
 import ru.daniilxt.feature.databinding.FragmentMainScreenBinding
 import ru.daniilxt.feature.di.FeatureApi
 import ru.daniilxt.feature.di.FeatureComponent
+import ru.daniilxt.feature.favorite.presentation.FavoriteFragment
 import ru.daniilxt.feature.main_screen.presentation.adapter.MainScreenViewPagerAdapter
+import ru.daniilxt.feature.popular.presentation.PopularFragment
 
 class MainScreenFragment : BaseFragment<MainScreenViewModel>(R.layout.fragment_main_screen) {
 
@@ -20,7 +24,7 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(R.layout.fragment_m
 
     private val mainScreenViewPagerAdapter by lazy {
         MainScreenViewPagerAdapter(
-            this, emptyList()
+            this, listOf(PopularFragment.newInstance(), FavoriteFragment.newInstance())
         )
     }
 
@@ -35,6 +39,8 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(R.layout.fragment_m
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().setStatusBarColor(R.color.white)
+        requireView().setLightStatusBar()
     }
 
     override fun setupViews() {
