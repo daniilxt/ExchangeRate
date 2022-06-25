@@ -1,4 +1,5 @@
 <resources>
     <string name="error_unknown">Неизвестная ошибка, попробуйте позднее.</string>
     <string name="error_connection">Ошибка подключения к серверу, попробуйте позднее.</string>
+    <string name="currency">Валюта</string>
 </resources>

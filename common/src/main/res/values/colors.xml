@@ -3,6 +3,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="background_primary">#FFFFFF</color>
-    <color name="background_secondary">#E5E5E5</color>
+    <color name="bg_primary">#FFFFFF</color>
+    <color name="bg_secondary">#E5E5E5</color>
+
+    <color name="text_color_hint_primary">#A3A3A3</color>
+
+    <color name="tint_primary">#4385F6</color>
 </resources>
