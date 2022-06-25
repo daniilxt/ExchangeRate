@@ -6,12 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
-import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import ru.daniilxt.common.base.BaseFragment
 import ru.daniilxt.common.di.FeatureUtils
+import ru.daniilxt.common.extensions.setDebounceClickListener
 import ru.daniilxt.common.extensions.setLightStatusBar
 import ru.daniilxt.common.extensions.setStatusBarColor
 import ru.daniilxt.feature.R
@@ -57,12 +57,17 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(R.layout.fragment_m
     override fun setupViews() {
         super.setupViews()
         initViewPager()
+        binding.mbFilter.setDebounceClickListener{
+            viewModel.getCurrency()
+        }
     }
 
     override fun setupViewModelSubscriber() {
         super.setupViewModelSubscriber()
         viewModel.currencyTitles.observe {
-            setSpinnerListAdapter(binding.spinnerCurrency.spinnerText, it)
+            if (it.isNotEmpty()) {
+                setSpinnerListAdapter(binding.spinnerCurrency.spinnerText, it)
+            }
         }
     }
 

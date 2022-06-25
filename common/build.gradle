@@ -17,7 +17,7 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField "String", "ENDPOINT", "\"https://89f1-95-27-43-5.eu.ngrok.io\""
+            buildConfigField "String", "ENDPOINT", "\"https://api.exchangerate.host\""
         }
         release {
             minifyEnabled false
