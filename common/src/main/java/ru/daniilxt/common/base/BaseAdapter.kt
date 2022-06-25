@@ -9,10 +9,6 @@ abstract class BaseAdapter<T : BaseModel, VH : BaseViewHolder<T, *>> :
     protected val data: MutableList<T> = mutableListOf()
     protected val differ by lazy { AsyncListDiffer(this, BaseDiffUtilCallback<T>()) }
 
-    init {
-        this.setHasStableIds(true)
-    }
-
     override fun getItemId(position: Int): Long = differ.currentList[position].id
 
     override fun getItemCount(): Int = differ.currentList.size

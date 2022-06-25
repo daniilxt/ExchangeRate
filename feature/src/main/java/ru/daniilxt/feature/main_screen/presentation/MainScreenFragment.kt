@@ -1,14 +1,12 @@
 package ru.daniilxt.feature.main_screen.presentation
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
-import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.tabs.TabLayoutMediator
 import ru.daniilxt.common.base.BaseFragment
 import ru.daniilxt.common.di.FeatureUtils
@@ -25,8 +23,7 @@ import ru.daniilxt.feature.popular.presentation.PopularFragment
 
 class MainScreenFragment : BaseFragment<MainScreenViewModel>(R.layout.fragment_main_screen) {
 
-    private var _binding: FragmentMainScreenBinding? = null
-    override val binding get() = requireNotNull(_binding)
+    override val binding: FragmentMainScreenBinding by viewBinding(FragmentMainScreenBinding::bind)
 
     private val currentViewPagerFrg: Fragment?
         get() {
@@ -37,15 +34,6 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(R.layout.fragment_m
         MainScreenViewPagerAdapter(
             this, listOf(PopularFragment.newInstance(), FavoriteFragment.newInstance())
         )
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentMainScreenBinding.inflate(layoutInflater)
-        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -62,7 +50,9 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(R.layout.fragment_m
     override fun setupViewModelSubscriber() {
         super.setupViewModelSubscriber()
         viewModel.currencyTitles.observe {
-            setSpinnerListAdapter(binding.spinnerCurrency.spinnerText, it)
+            if (it.isNotEmpty()) {
+                setSpinnerListAdapter(binding.spinnerCurrency.spinnerText, it)
+            }
         }
     }
 
@@ -76,13 +66,13 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(R.layout.fragment_m
     }
 
     private fun setSpinnerListAdapter(spinner: AutoCompleteTextView, data: List<String>) {
+        binding.spinnerCurrency.spinnerText.addTextChangedListener(beforeTextChanged = { text, _, _, _ ->
+            // Call update rv in view pager child frg
+            (currentViewPagerFrg as? IUpdatable)?.update(text.toString())
+        })
         val adapter = ArrayAdapter(requireContext(), R.layout.spinner_text_item, data)
         spinner.setText(data.first())
         spinner.setAdapter(adapter)
-        binding.spinnerCurrency.spinnerText.addTextChangedListener(beforeTextChanged = { _, _, _, _ ->
-            // Call update rv in view pager child frg
-            (currentViewPagerFrg as? IUpdatable)?.update()
-        })
     }
 
     override fun inject() {
