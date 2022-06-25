@@ -17,5 +17,6 @@
 
     <style name="spinnerBackground" parent="Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
         <item name="colorSurface">@color/white</item>
+        <item name="android:colorBackground">#ff0000</item>
     </style>
 </resources>

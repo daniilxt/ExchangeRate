@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <include
-        android:id="@+id/spinner_cities"
+        android:id="@+id/spinner_currency"
         layout="@layout/dropdown_menu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -37,9 +37,9 @@
         android:checkable="true"
         android:padding="@dimen/dp_16"
         app:icon="@drawable/ic_filter_list_24"
-        app:layout_constraintBottom_toBottomOf="@+id/spinner_cities"
+        app:layout_constraintBottom_toBottomOf="@+id/spinner_currency"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/spinner_cities" />
+        app:layout_constraintTop_toTopOf="@id/spinner_currency" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager"
@@ -47,7 +47,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/dp_8"
         app:layout_constraintBottom_toTopOf="@id/tab_layout"
-        app:layout_constraintTop_toBottomOf="@id/spinner_cities" />
+        app:layout_constraintTop_toBottomOf="@id/spinner_currency" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
