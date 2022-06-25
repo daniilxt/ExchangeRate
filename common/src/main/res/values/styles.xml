@@ -1,2 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+
+    <style name="TextView.Title" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textColor">@color/black</item>
+        <item name="fontFamily">@font/work_sans_semibold</item>
+        <item name="android:textSize">@dimen/sp_20</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="TextView.PlainText" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textColor">@color/black</item>
+        <item name="fontFamily">@font/work_sans_regular</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="spinnerBackground" parent="Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="colorSurface">@color/white</item>
+        <item name="android:colorBackground">#ff0000</item>
+    </style>
+</resources>

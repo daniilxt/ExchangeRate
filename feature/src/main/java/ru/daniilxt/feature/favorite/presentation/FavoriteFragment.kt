@@ -9,8 +9,10 @@ import ru.daniilxt.feature.R
 import ru.daniilxt.feature.databinding.FragmentFavoriteBinding
 import ru.daniilxt.feature.di.FeatureApi
 import ru.daniilxt.feature.di.FeatureComponent
+import ru.daniilxt.feature.interactors.IUpdatable
+import timber.log.Timber
 
-class FavoriteFragment : BaseFragment<FavoriteViewModel>(R.layout.fragment_favorite) {
+class FavoriteFragment : BaseFragment<FavoriteViewModel>(R.layout.fragment_favorite), IUpdatable {
 
     override val binding: FragmentFavoriteBinding by viewBinding(FragmentFavoriteBinding::bind)
 
@@ -23,6 +25,10 @@ class FavoriteFragment : BaseFragment<FavoriteViewModel>(R.layout.fragment_favor
             .favoriteComponentFactory()
             .create(this)
             .inject(this)
+    }
+
+    override fun update() {
+        Timber.i("Update from favorite")
     }
 
     companion object {

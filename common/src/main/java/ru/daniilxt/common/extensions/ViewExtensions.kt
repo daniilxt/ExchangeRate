@@ -1,9 +1,11 @@
 package ru.daniilxt.common.extensions
 
 import android.os.Build
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsetsController
+import androidx.viewbinding.ViewBinding
 import ru.daniilxt.common.utils.DebounceClickListener
 import ru.daniilxt.common.utils.DebouncePostHandler
 
@@ -65,3 +67,7 @@ inline fun <reified T : ViewGroup.LayoutParams> View.layoutParams(block: T.() ->
 }
 
 fun View.dpToPx(dp: Float): Float = context.dpToPx(dp)
+
+/** Not really a delegate, just a small helper for RecyclerView.ViewHolders */
+inline fun <T : ViewBinding> ViewGroup.viewBinding(factory: (LayoutInflater, ViewGroup, Boolean) -> T) =
+    factory(LayoutInflater.from(context), this, false)
