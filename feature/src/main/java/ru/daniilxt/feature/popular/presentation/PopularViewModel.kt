@@ -1,37 +1,30 @@
 package ru.daniilxt.feature.popular.presentation
 
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import ru.daniilxt.common.base.BaseViewModel
+import ru.daniilxt.common.error.RequestResult
 import ru.daniilxt.feature.FeatureRouter
 import ru.daniilxt.feature.domain.model.Currency
+import ru.daniilxt.feature.domain.usecase.GetCurrencyListUseCase
 
-class PopularViewModel(private val router: FeatureRouter) : BaseViewModel() {
+class PopularViewModel(
+    private val router: FeatureRouter,
+    private val getCurrencyListUseCase: GetCurrencyListUseCase
+) : BaseViewModel() {
     private val _currencyList: MutableStateFlow<List<Currency>> = MutableStateFlow(emptyList())
     val currencyList: StateFlow<List<Currency>> get() = _currencyList
 
-    init {
-        _currencyList.value = listOf(
-            Currency(
-                name = "RUB",
-                value = 0.05,
-                isFavorite = true
-            ),
-            Currency(
-                name = "USD",
-                value = 1.5,
-                isFavorite = false
-            ),
-            Currency(
-                name = "EUR",
-                value = 1.0,
-                isFavorite = false
-            ),
-            Currency(
-                name = "UAH",
-                value = 57.5,
-                isFavorite = false
-            ),
-        )
+    fun loadCurrencyInfo(currencyName: String) {
+        viewModelScope.launch {
+            when (val call = getCurrencyListUseCase.invoke(currencyName)) {
+                is RequestResult.Success -> {
+                    _currencyList.value = call.data
+                }
+                is RequestResult.Error -> {}
+            }
+        }
     }
 }

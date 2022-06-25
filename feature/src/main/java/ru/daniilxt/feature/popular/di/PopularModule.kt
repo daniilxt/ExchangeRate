@@ -9,6 +9,7 @@ import dagger.multibindings.IntoMap
 import ru.daniilxt.common.di.viewmodel.ViewModelKey
 import ru.daniilxt.common.di.viewmodel.ViewModelModule
 import ru.daniilxt.feature.FeatureRouter
+import ru.daniilxt.feature.domain.usecase.GetCurrencyListUseCase
 import ru.daniilxt.feature.popular.presentation.PopularViewModel
 
 @Module(
@@ -22,10 +23,11 @@ class PopularModule {
     @IntoMap
     @ViewModelKey(PopularViewModel::class)
     fun provideViewModel(
-        navigator: FeatureRouter
+        navigator: FeatureRouter,
+        getCurrencyListUseCase: GetCurrencyListUseCase
     ): ViewModel {
         return PopularViewModel(
-            navigator
+            navigator, getCurrencyListUseCase
         )
     }
 

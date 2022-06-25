@@ -27,7 +27,7 @@ class FavoriteFragment : BaseFragment<FavoriteViewModel>(R.layout.fragment_favor
             .inject(this)
     }
 
-    override fun update() {
+    override fun update(currencyName: String) {
         Timber.i("Update from favorite")
     }
 

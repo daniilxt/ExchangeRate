@@ -1,5 +1,5 @@
 package ru.daniilxt.feature.interactors
 
 interface IUpdatable {
-    fun update()
+    fun update(currencyName: String)
 }

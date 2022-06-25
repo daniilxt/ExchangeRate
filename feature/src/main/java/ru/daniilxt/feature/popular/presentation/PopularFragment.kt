@@ -39,8 +39,9 @@ class PopularFragment : BaseFragment<PopularViewModel>(R.layout.fragment_popular
             .inject(this)
     }
 
-    override fun update() {
+    override fun update(currencyName: String) {
         Timber.i("Update from popoular")
+        viewModel.loadCurrencyInfo(currencyName)
     }
 
     companion object {

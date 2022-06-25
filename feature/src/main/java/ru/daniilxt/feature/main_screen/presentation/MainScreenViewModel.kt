@@ -14,8 +14,6 @@ class MainScreenViewModel(
     private val router: FeatureRouter,
     private val getCurrencyListUseCase: GetCurrencyListUseCase
 ) : BaseViewModel() {
-    var currentSelectedPage = INITIAL_PAGE
-        private set
 
     private val _currencyTitles: MutableStateFlow<List<String>> = MutableStateFlow(emptyList())
     val currencyTitles: StateFlow<List<String>> get() = _currencyTitles
@@ -26,6 +24,7 @@ class MainScreenViewModel(
 
     fun getCurrency() {
         viewModelScope.launch {
+            setEventState(ResponseState.Initial)
             when (val call = getCurrencyListUseCase.invoke("USD")) {
                 is RequestResult.Success -> {
                     _currencyTitles.value = call.data.map { it.name }
@@ -36,9 +35,5 @@ class MainScreenViewModel(
                 }
             }
         }
-    }
-
-    companion object {
-        private const val INITIAL_PAGE = 0
     }
 }
