@@ -2,4 +2,14 @@
     <string name="error_unknown">Неизвестная ошибка, попробуйте позднее.</string>
     <string name="error_connection">Ошибка подключения к серверу, попробуйте позднее.</string>
     <string name="currency">Валюта</string>
+    <string name="ready">Готово</string>
+    <string name="filtering">Сортировка</string>
+
+    <string name="popular">Популярное</string>
+    <string name="favourite">Избранное</string>
+
+    <string name="alphabetically_asc">По алфавиту: А-Я</string>
+    <string name="alphabetically_desc">По алфавиту: Я-А</string>
+    <string name="value_asc">По значению: в порядке возврастания</string>
+    <string name="value_desc">По значению: в порядке убывания</string>
 </resources>
