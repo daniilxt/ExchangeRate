@@ -7,6 +7,7 @@ import ru.daniilxt.feature.R
 import ru.daniilxt.feature.databinding.FragmentPopularBinding
 import ru.daniilxt.feature.di.FeatureApi
 import ru.daniilxt.feature.di.FeatureComponent
+import ru.daniilxt.feature.domain.model.FilterType
 import ru.daniilxt.feature.interactors.IUpdatable
 import ru.daniilxt.feature.shared_adapter.CurrencyAdapter
 import timber.log.Timber
@@ -42,6 +43,10 @@ class PopularFragment : BaseFragment<PopularViewModel>(R.layout.fragment_popular
     override fun update(currencyName: String) {
         Timber.i("Update from popoular")
         viewModel.loadCurrencyInfo(currencyName)
+    }
+
+    override fun filterBy(filterType: FilterType) {
+        viewModel.filterBy(filterType)
     }
 
     companion object {
