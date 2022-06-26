@@ -10,7 +10,6 @@ import ru.daniilxt.feature.di.FeatureComponent
 import ru.daniilxt.feature.domain.model.FilterType
 import ru.daniilxt.feature.interactors.IUpdatable
 import ru.daniilxt.feature.shared_adapter.CurrencyAdapter
-import timber.log.Timber
 
 class PopularFragment : BaseFragment<PopularViewModel>(R.layout.fragment_popular), IUpdatable {
 
@@ -41,7 +40,6 @@ class PopularFragment : BaseFragment<PopularViewModel>(R.layout.fragment_popular
     }
 
     override fun update(currencyName: String) {
-        Timber.i("Update from popoular")
         viewModel.loadCurrencyInfo(currencyName)
     }
 

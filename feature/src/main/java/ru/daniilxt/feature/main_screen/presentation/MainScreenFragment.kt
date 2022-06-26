@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
-import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -44,10 +43,10 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(R.layout.fragment_m
             this, listOf(PopularFragment.newInstance(), FavoriteFragment.newInstance())
         )
     }
+
     private val filterDialog by lazy {
         FilterDialogFragment.newInstance().apply {
             setOnOkClickListener {
-                Toast.makeText(requireContext(), "$it", Toast.LENGTH_SHORT).show()
                 (currentViewPagerFrg as? IUpdatable)?.filterBy(it)
             }
         }
@@ -63,12 +62,6 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(R.layout.fragment_m
         super.setupViews()
         initViewPager()
         setupButtons()
-    }
-
-    private fun setupButtons() {
-        binding.mbFilter.setDebounceClickListener {
-            parentFragmentManager.showDialog(filterDialog)
-        }
     }
 
     override fun setupViewModelSubscriber() {
@@ -89,6 +82,19 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(R.layout.fragment_m
         }.attach()
     }
 
+    override fun inject() {
+        FeatureUtils.getFeature<FeatureComponent>(this, FeatureApi::class.java)
+            .mainScreenComponentFactory()
+            .create(this)
+            .inject(this)
+    }
+
+    private fun setupButtons() {
+        binding.mbFilter.setDebounceClickListener {
+            parentFragmentManager.showDialog(filterDialog)
+        }
+    }
+
     private fun setSpinnerListAdapter(spinner: AutoCompleteTextView, data: List<String>) {
         binding.spinnerCurrency.spinnerText.addTextChangedListener(beforeTextChanged = { text, _, _, _ ->
             // Call update rv in view pager child frg
@@ -100,13 +106,6 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(R.layout.fragment_m
         val adapter = ArrayAdapter(requireContext(), R.layout.spinner_text_item, data)
         spinner.setText(data.first())
         spinner.setAdapter(adapter)
-    }
-
-    override fun inject() {
-        FeatureUtils.getFeature<FeatureComponent>(this, FeatureApi::class.java)
-            .mainScreenComponentFactory()
-            .create(this)
-            .inject(this)
     }
 
     companion object {

@@ -11,7 +11,6 @@ import ru.daniilxt.feature.di.FeatureApi
 import ru.daniilxt.feature.di.FeatureComponent
 import ru.daniilxt.feature.domain.model.FilterType
 import ru.daniilxt.feature.interactors.IUpdatable
-import timber.log.Timber
 
 class FavoriteFragment : BaseFragment<FavoriteViewModel>(R.layout.fragment_favorite), IUpdatable {
 
@@ -29,7 +28,6 @@ class FavoriteFragment : BaseFragment<FavoriteViewModel>(R.layout.fragment_favor
     }
 
     override fun update(currencyName: String) {
-        Timber.i("Update from favorite")
     }
 
     override fun filterBy(filterType: FilterType) {
