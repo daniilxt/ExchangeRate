@@ -34,7 +34,9 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(R.layout.fragment_m
 
     private val currentViewPagerFrg: Fragment?
         get() {
-            return childFragmentManager.findFragmentByTag(FRAGMENT_TAG + binding.viewPager.currentItem)
+            return childFragmentManager.findFragmentByTag(
+                FRAGMENT_TAG + binding.viewPager.currentItem
+            )
         }
 
     private val mainScreenViewPagerAdapter by lazy {
@@ -46,6 +48,7 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(R.layout.fragment_m
         FilterDialogFragment.newInstance().apply {
             setOnOkClickListener {
                 Toast.makeText(requireContext(), "$it", Toast.LENGTH_SHORT).show()
+                (currentViewPagerFrg as? IUpdatable)?.filterBy(it)
             }
         }
     }
