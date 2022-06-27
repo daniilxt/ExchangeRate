@@ -10,14 +10,16 @@ import ru.daniilxt.feature.di.FeatureComponent
 import ru.daniilxt.feature.domain.model.FilterType
 import ru.daniilxt.feature.interactors.IUpdatable
 import ru.daniilxt.feature.shared_adapter.CurrencyAdapter
-import timber.log.Timber
+import ru.daniilxt.feature.shared_view_model.SharedCurrencyViewModel
 
-class PopularFragment : BaseFragment<PopularViewModel>(R.layout.fragment_popular), IUpdatable {
+class PopularFragment :
+    BaseFragment<SharedCurrencyViewModel>(R.layout.fragment_popular), IUpdatable {
 
     override val binding: FragmentPopularBinding by viewBinding(FragmentPopularBinding::bind)
 
     private val currencyAdapter by lazy {
         CurrencyAdapter {
+            viewModel.changeFavoriteState(it)
         }
     }
 
@@ -33,20 +35,22 @@ class PopularFragment : BaseFragment<PopularViewModel>(R.layout.fragment_popular
         }
     }
 
+    override fun update(currencyName: String) {
+        viewModel.updateCurrencyInfo(currencyName)
+    }
+
+    override fun load(currencyName: String) {
+    }
+
+    override fun filterBy(filterType: FilterType) {
+        viewModel.filterBy(filterType)
+    }
+
     override fun inject() {
         FeatureUtils.getFeature<FeatureComponent>(this, FeatureApi::class.java)
             .popularComponentFactory()
             .create(this)
             .inject(this)
-    }
-
-    override fun update(currencyName: String) {
-        Timber.i("Update from popoular")
-        viewModel.loadCurrencyInfo(currencyName)
-    }
-
-    override fun filterBy(filterType: FilterType) {
-        viewModel.filterBy(filterType)
     }
 
     companion object {

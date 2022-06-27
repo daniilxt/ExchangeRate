@@ -1,7 +1,5 @@
 package ru.daniilxt.feature.favorite.presentation
 
-import android.os.Bundle
-import android.view.View
 import by.kirich1409.viewbindingdelegate.viewBinding
 import ru.daniilxt.common.base.BaseFragment
 import ru.daniilxt.common.di.FeatureUtils
@@ -11,14 +9,41 @@ import ru.daniilxt.feature.di.FeatureApi
 import ru.daniilxt.feature.di.FeatureComponent
 import ru.daniilxt.feature.domain.model.FilterType
 import ru.daniilxt.feature.interactors.IUpdatable
-import timber.log.Timber
+import ru.daniilxt.feature.shared_adapter.CurrencyAdapter
+import ru.daniilxt.feature.shared_view_model.SharedCurrencyViewModel
 
-class FavoriteFragment : BaseFragment<FavoriteViewModel>(R.layout.fragment_favorite), IUpdatable {
+class FavoriteFragment : BaseFragment<SharedCurrencyViewModel>(R.layout.fragment_favorite), IUpdatable {
 
     override val binding: FragmentFavoriteBinding by viewBinding(FragmentFavoriteBinding::bind)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    private val currencyAdapter by lazy {
+        CurrencyAdapter {
+            viewModel.changeFavoriteState(it)
+        }
+    }
+
+    override fun setupViews() {
+        super.setupViews()
+        binding.rvFavorite.adapter = currencyAdapter
+    }
+
+    override fun setupViewModelSubscriber() {
+        super.setupViewModelSubscriber()
+        viewModel.favoriteCurrencies.observe {
+            currencyAdapter.bindData(it)
+        }
+    }
+
+    override fun update(currencyName: String) {
+        viewModel.updateCurrencyInfo(currencyName)
+    }
+
+    override fun load(currencyName: String) {
+        viewModel.loadFavoriteCurrencyInfo()
+    }
+
+    override fun filterBy(filterType: FilterType) {
+        viewModel.filterBy(filterType)
     }
 
     override fun inject() {
@@ -26,13 +51,6 @@ class FavoriteFragment : BaseFragment<FavoriteViewModel>(R.layout.fragment_favor
             .favoriteComponentFactory()
             .create(this)
             .inject(this)
-    }
-
-    override fun update(currencyName: String) {
-        Timber.i("Update from favorite")
-    }
-
-    override fun filterBy(filterType: FilterType) {
     }
 
     companion object {

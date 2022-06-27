@@ -16,6 +16,7 @@ import ru.daniilxt.feature.popular.di.PopularComponent
     modules = [
         FeatureModule::class,
         FeatureDataModule::class,
+        RoomDatabaseModule::class,
     ]
 )
 @FeatureScope

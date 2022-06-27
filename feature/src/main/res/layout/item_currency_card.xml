@@ -19,7 +19,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_20"
-            android:text="RUB"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -27,21 +26,26 @@
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_currency_value"
             style="@style/Widget.MaterialComponents.Chip.Choice"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_20"
             android:clickable="false"
             android:focusable="false"
+            android:paddingHorizontal="@dimen/dp_8"
+            app:chipStrokeColor="@color/white"
+            app:chipStrokeWidth="@dimen/dp_2"
             app:layout_constraintBottom_toBottomOf="@+id/tv_currency"
+            app:layout_constraintEnd_toStartOf="@id/ib_like"
+            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toEndOf="@+id/tv_currency"
-            app:layout_constraintTop_toTopOf="@+id/tv_currency" />
+            app:layout_constraintTop_toTopOf="@+id/tv_currency"
+            app:layout_constraintWidth_percent="0.5" />
 
         <ImageButton
             android:id="@+id/ib_like"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:src="@drawable/bg_toggle_like"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

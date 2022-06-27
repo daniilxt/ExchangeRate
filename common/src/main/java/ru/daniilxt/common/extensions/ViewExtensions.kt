@@ -5,9 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsetsController
-import android.widget.RadioGroup
 import androidx.viewbinding.ViewBinding
-import kotlinx.coroutines.NonCancellable.children
 import ru.daniilxt.common.utils.DebounceClickListener
 import ru.daniilxt.common.utils.DebouncePostHandler
 

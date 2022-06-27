@@ -8,7 +8,6 @@ import dagger.Provides
 import dagger.multibindings.IntoMap
 import ru.daniilxt.common.di.viewmodel.ViewModelKey
 import ru.daniilxt.common.di.viewmodel.ViewModelModule
-import ru.daniilxt.feature.FeatureRouter
 import ru.daniilxt.feature.domain.usecase.GetCurrencyListUseCase
 import ru.daniilxt.feature.main_screen.presentation.MainScreenViewModel
 
@@ -23,11 +22,10 @@ class MainScreenModule {
     @IntoMap
     @ViewModelKey(MainScreenViewModel::class)
     fun provideViewModel(
-        navigator: FeatureRouter,
         getCurrencyList: GetCurrencyListUseCase
     ): ViewModel {
         return MainScreenViewModel(
-            navigator, getCurrencyList
+            getCurrencyList
         )
     }
 

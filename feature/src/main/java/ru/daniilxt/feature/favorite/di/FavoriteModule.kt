@@ -1,15 +1,14 @@
 package ru.daniilxt.feature.favorite.di
 
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap
 import ru.daniilxt.common.di.viewmodel.ViewModelKey
 import ru.daniilxt.common.di.viewmodel.ViewModelModule
-import ru.daniilxt.feature.FeatureRouter
-import ru.daniilxt.feature.favorite.presentation.FavoriteViewModel
+import ru.daniilxt.feature.database.repository.FavoriteCurrencyRepository
+import ru.daniilxt.feature.domain.usecase.GetCurrencyListUseCase
+import ru.daniilxt.feature.shared_view_model.SharedCurrencyViewModel
 
 @Module(
     includes = [
@@ -20,20 +19,13 @@ class FavoriteModule {
 
     @Provides
     @IntoMap
-    @ViewModelKey(FavoriteViewModel::class)
+    @ViewModelKey(SharedCurrencyViewModel::class)
     fun provideViewModel(
-        navigator: FeatureRouter
+        repository: FavoriteCurrencyRepository,
+        getCurrencyListUseCase: GetCurrencyListUseCase
     ): ViewModel {
-        return FavoriteViewModel(
-            navigator
+        return SharedCurrencyViewModel(
+            repository, getCurrencyListUseCase
         )
-    }
-
-    @Provides
-    fun provideViewModelCreator(
-        fragment: Fragment,
-        viewModelFactory: ViewModelProvider.Factory
-    ): FavoriteViewModel {
-        return ViewModelProvider(fragment, viewModelFactory).get(FavoriteViewModel::class.java)
     }
 }

@@ -1,5 +1,3 @@
 package ru.daniilxt.feature
 
-interface FeatureRouter {
-
-}
+interface FeatureRouter
