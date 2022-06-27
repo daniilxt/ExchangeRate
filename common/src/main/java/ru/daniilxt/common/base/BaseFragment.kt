@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import ru.daniilxt.common.model.ResponseState
 import javax.inject.Inject
@@ -50,7 +49,9 @@ abstract class BaseFragment<T : BaseViewModel>(@LayoutRes fragmentLayoutId: Int)
 
     protected inline fun <V> Flow<V>.observe(crossinline collector: suspend (V) -> Unit) {
         lifecycleScope.launch {
-            this@observe.collect(collector)
+            this@observe.collect {
+                collector.invoke(it)
+            }
         }
     }
 

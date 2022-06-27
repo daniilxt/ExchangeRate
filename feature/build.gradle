@@ -71,4 +71,10 @@ dependencies {
 
     implementation gsonConverterDep
     implementation gsonDep
+
+    implementation viewBindingDelegateDep
+
+    implementation roomDep
+    implementation roomKtxDep
+    kapt roomCompilerKapt
 }

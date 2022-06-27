@@ -7,11 +7,11 @@ import dagger.multibindings.IntoMap
 import ru.daniilxt.common.di.FeatureApiHolder
 import ru.daniilxt.common.di.FeatureContainer
 import ru.daniilxt.common.di.scope.ApplicationScope
-import ru.daniilxt.feature.di.FeatureApi
-import ru.daniilxt.feature.di.FeatureFeatureHolder
 import ru.daniilxt.exchange_rate.App
 import ru.daniilxt.exchange_rate.root.di.RootApi
 import ru.daniilxt.exchange_rate.root.di.RootFeatureHolder
+import ru.daniilxt.feature.di.FeatureApi
+import ru.daniilxt.feature.di.FeatureFeatureHolder
 
 @Module
 interface ComponentHolderModule {
