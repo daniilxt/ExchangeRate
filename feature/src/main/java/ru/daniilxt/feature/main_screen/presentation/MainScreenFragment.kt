@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -32,6 +33,7 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(R.layout.fragment_m
 
     override val binding: FragmentMainScreenBinding by viewBinding(FragmentMainScreenBinding::bind)
 
+    // Gets the current child fragment in the view pager
     private val currentViewPagerFrg: Fragment?
         get() {
             return childFragmentManager.findFragmentByTag(
@@ -44,6 +46,7 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(R.layout.fragment_m
             this, listOf(PopularFragment.newInstance(), FavoriteFragment.newInstance())
         )
     }
+
     private val viewPagerCallback = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
             (currentViewPagerFrg as? IUpdatable)?.load(binding.spinnerCurrency.spinnerText.text.toString())
@@ -62,6 +65,8 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(R.layout.fragment_m
         super.onViewCreated(view, savedInstanceState)
         requireActivity().setStatusBarColor(R.color.white)
         requireView().setLightStatusBar()
+        requireActivity().window.navigationBarColor =
+            ContextCompat.getColor(requireContext(), R.color.white)
     }
 
     override fun setupViews() {
@@ -74,9 +79,16 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(R.layout.fragment_m
         super.setupViewModelSubscriber()
         viewModel.currencyTitles.observe {
             if (it.isNotEmpty()) {
-                setSpinnerListAdapter(binding.spinnerCurrency.spinnerText, it)
+                setupSpinnerListAdapter(binding.spinnerCurrency.spinnerText, it)
             }
         }
+    }
+
+    override fun inject() {
+        FeatureUtils.getFeature<FeatureComponent>(this, FeatureApi::class.java)
+            .mainScreenComponentFactory()
+            .create(this)
+            .inject(this)
     }
 
     private fun initViewPager() {
@@ -90,25 +102,18 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(R.layout.fragment_m
         }.attach()
     }
 
-    override fun inject() {
-        FeatureUtils.getFeature<FeatureComponent>(this, FeatureApi::class.java)
-            .mainScreenComponentFactory()
-            .create(this)
-            .inject(this)
-    }
-
     private fun setupButtons() {
         binding.mbFilter.setDebounceClickListener {
             parentFragmentManager.showDialog(filterDialog)
         }
     }
 
-    private fun setSpinnerListAdapter(spinner: AutoCompleteTextView, data: List<String>) {
-        binding.spinnerCurrency.spinnerText.addTextChangedListener(beforeTextChanged = { text, _, _, _ ->
+    private fun setupSpinnerListAdapter(spinner: AutoCompleteTextView, data: List<String>) {
+        binding.spinnerCurrency.spinnerText.addTextChangedListener(beforeTextChanged = { _, _, _, _ ->
             // Call update rv in view pager child frg
             lifecycleScope.launch {
-                delay(300L)
-                (currentViewPagerFrg as? IUpdatable)?.update(text.toString())
+                delay(100L)
+                (currentViewPagerFrg as? IUpdatable)?.update(binding.spinnerCurrency.spinnerText.text.toString())
             }
         })
         val adapter = ArrayAdapter(requireContext(), R.layout.spinner_text_item, data)

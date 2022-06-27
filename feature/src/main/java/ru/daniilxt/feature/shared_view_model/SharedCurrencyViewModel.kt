@@ -62,11 +62,6 @@ class SharedCurrencyViewModel(
         }
     }
 
-    //
-    fun loadCurrencyInfo(currencyName: String) {
-        if (_currencyList.value.isEmpty()) updateCurrencyInfo(currencyName)
-    }
-
     fun loadFavoriteCurrencyInfo() {
         _favoriteCurrencies.value = _currencyList.value
             .filter { item -> item.name in _favoriteCurrenciesDB.value.map { it.name } }
@@ -78,6 +73,7 @@ class SharedCurrencyViewModel(
         loadFavoriteCurrencyInfo()
     }
 
+    // Adds or removes currency from favorites
     fun changeFavoriteState(currency: Currency) {
         viewModelScope.launch {
             val newState = currency.copy(isFavorite = !currency.isFavorite)
@@ -90,6 +86,7 @@ class SharedCurrencyViewModel(
         }
     }
 
+    // Updates local favorite flow
     private fun updateCurrencyInFavorite(currency: Currency) {
         if (currency.name in _favoriteCurrenciesDB.value.map { it.name }) {
             _favoriteCurrenciesDB.value =

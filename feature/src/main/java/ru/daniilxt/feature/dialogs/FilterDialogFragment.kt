@@ -18,7 +18,7 @@ import ru.daniilxt.feature.domain.model.FilterType
 
 class FilterDialogFragment : DialogFragment() {
     private var _binding: FragmentFilterDialogBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = requireNotNull(_binding)
     private var onOkClickListener: ((filterType: FilterType) -> Unit)? = null
 
     private val dialogContext get() = binding.root.context
@@ -52,7 +52,7 @@ class FilterDialogFragment : DialogFragment() {
         (binding.radioGroup[0] as MaterialRadioButton).isChecked = true
     }
 
-    fun getFilterType(): FilterType {
+    private fun getFilterType(): FilterType {
         val rb =
             binding.radioGroup.getChildAt(binding.radioGroup.checkedIndex) as MaterialRadioButton
         return when (rb.text) {

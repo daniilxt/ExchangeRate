@@ -11,12 +11,19 @@ class CurrencyViewHolder(private val binding: ItemCurrencyCardBinding) :
     fun bind(item: Currency, onFavoriteItemClickListener: (Currency) -> Unit) {
         binding.tvCurrency.text = item.name
         binding.chipCurrencyValue.text = item.value.toString()
-        binding.ibLike.setImageResource(
-            when (item.isFavorite) {
-                true -> R.drawable.ic_star_24
-                else -> R.drawable.ic_star_outline_24
+
+        // Highlights the user's favorite currency
+        when (item.isFavorite) {
+            true -> {
+                binding.ibLike.setImageResource(R.drawable.ic_star_24)
+                binding.chipCurrencyValue.setChipBackgroundColorResource(android.R.color.holo_green_dark)
             }
-        )
+            else -> {
+                binding.ibLike.setImageResource(R.drawable.ic_star_outline_24)
+                binding.chipCurrencyValue.setChipBackgroundColorResource(android.R.color.holo_blue_dark)
+            }
+        }
+
         binding.ibLike.setDebounceClickListener {
             onFavoriteItemClickListener(item)
         }

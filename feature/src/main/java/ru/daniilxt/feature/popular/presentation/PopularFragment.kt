@@ -40,7 +40,6 @@ class PopularFragment :
     }
 
     override fun load(currencyName: String) {
-        viewModel.loadCurrencyInfo(currencyName)
     }
 
     override fun filterBy(filterType: FilterType) {
