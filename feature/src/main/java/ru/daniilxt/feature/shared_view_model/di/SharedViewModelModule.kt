@@ -1,4 +1,4 @@
-package ru.daniilxt.feature.popular.di
+package ru.daniilxt.feature.shared_view_model.di
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
@@ -11,14 +11,13 @@ import ru.daniilxt.common.di.viewmodel.ViewModelModule
 import ru.daniilxt.feature.database.repository.FavoriteCurrencyRepository
 import ru.daniilxt.feature.domain.usecase.GetCurrencyListUseCase
 import ru.daniilxt.feature.shared_view_model.SharedCurrencyViewModel
-import javax.inject.Singleton
 
 @Module(
     includes = [
         ViewModelModule::class
     ]
 )
-class PopularModule {
+class SharedViewModelModule {
 
     @Provides
     @IntoMap
@@ -27,17 +26,17 @@ class PopularModule {
         repository: FavoriteCurrencyRepository,
         getCurrencyListUseCase: GetCurrencyListUseCase
     ): ViewModel {
-        return SharedCurrencyViewModel(
-            repository, getCurrencyListUseCase
-        )
+        return SharedCurrencyViewModel.newInstance(repository, getCurrencyListUseCase)
     }
 
     @Provides
-    @Singleton
     fun provideViewModelCreator(
         fragment: Fragment,
         viewModelFactory: ViewModelProvider.Factory
     ): SharedCurrencyViewModel {
-        return ViewModelProvider(fragment, viewModelFactory).get(SharedCurrencyViewModel::class.java)
+        return ViewModelProvider(
+            fragment,
+            viewModelFactory
+        )[SharedCurrencyViewModel::class.java]
     }
 }

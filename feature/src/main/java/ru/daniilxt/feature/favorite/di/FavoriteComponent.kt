@@ -4,10 +4,11 @@ import dagger.BindsInstance
 import dagger.Subcomponent
 import ru.daniilxt.common.di.scope.ScreenScope
 import ru.daniilxt.feature.favorite.presentation.FavoriteFragment
+import ru.daniilxt.feature.shared_view_model.di.SharedViewModelModule
 
 @Subcomponent(
     modules = [
-        FavoriteModule::class,
+        SharedViewModelModule::class,
     ]
 )
 @ScreenScope

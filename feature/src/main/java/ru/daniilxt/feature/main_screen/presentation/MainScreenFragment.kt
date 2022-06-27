@@ -7,6 +7,7 @@ import android.widget.AutoCompleteTextView
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.viewpager2.widget.ViewPager2
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.delay
@@ -43,6 +44,11 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(R.layout.fragment_m
             this, listOf(PopularFragment.newInstance(), FavoriteFragment.newInstance())
         )
     }
+    private val viewPagerCallback = object : ViewPager2.OnPageChangeCallback() {
+        override fun onPageSelected(position: Int) {
+            (currentViewPagerFrg as? IUpdatable)?.load(binding.spinnerCurrency.spinnerText.text.toString())
+        }
+    }
 
     private val filterDialog by lazy {
         FilterDialogFragment.newInstance().apply {
@@ -75,6 +81,8 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(R.layout.fragment_m
 
     private fun initViewPager() {
         binding.viewPager.adapter = mainScreenViewPagerAdapter
+        binding.viewPager.registerOnPageChangeCallback(viewPagerCallback)
+
         val titles = listOf(getString(R.string.popular), getString(R.string.favourite))
 
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
